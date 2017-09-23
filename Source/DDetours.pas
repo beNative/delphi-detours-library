@@ -18,7 +18,7 @@
 // RRUZ
 //
 // The Initial Developer of the Original Code is Mahdi Safsafi [SMP3].
-// Portions created by Mahdi Safsafi . are Copyright (C) 2013-2016 Mahdi Safsafi .
+// Portions created by Mahdi Safsafi . are Copyright (C) 2013-2017 Mahdi Safsafi .
 // All Rights Reserved.
 //
 // **************************************************************************************************
@@ -2239,7 +2239,12 @@ begin
   begin
     P := GetRoot(TargetProc);
     PDscr := CreateNewDescriptor;
-    InsertDescriptor(P, PDscr);
+    try
+      InsertDescriptor(P, PDscr);
+    except
+      FreeMem(PDscr);
+      raise;
+    end;
   end;
   Result := AddHook(PDscr, InterceptProc);
 end;
